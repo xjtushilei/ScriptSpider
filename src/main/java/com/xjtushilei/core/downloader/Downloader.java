@@ -1,6 +1,7 @@
 package com.xjtushilei.core.downloader;
 
 import com.xjtushilei.model.Page;
+import com.xjtushilei.model.UrlSeed;
 
 /**
  * Created by shilei on 2017/4/10.
@@ -9,7 +10,7 @@ import com.xjtushilei.model.Page;
 public interface Downloader {
 
     /**
-     * @param Url 下载url页面
+     * @param urlSeed 下载url页面
      */
-    public Page download(String Url);
+    public Page download(UrlSeed urlSeed);
 }

@@ -19,6 +19,10 @@ public class Page {
     private Document document;
     private List<?> items;
 
+    public Page(UrlSeed urlSeed, Document document) {
+        this.urlSeed = urlSeed;
+        this.document = document;
+    }
 
     public Page() {
     }

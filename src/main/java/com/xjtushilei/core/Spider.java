@@ -116,7 +116,7 @@ public class Spider {
             // (download下载) ->  (pageProcessor解析处理) ->  (save存储)
 
 
-            Page nowPage = downloader.download(urlSeed.getUrl());
+            Page nowPage = downloader.download(urlSeed);
 
 
             pageProcessor.process(nowPage);
