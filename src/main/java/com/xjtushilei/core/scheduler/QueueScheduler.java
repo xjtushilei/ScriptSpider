@@ -16,12 +16,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class QueueScheduler implements Scheduler {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    private BlockingQueue<UrlSeed> queue = new LinkedBlockingQueue<UrlSeed>();
+    private BlockingQueue<UrlSeed> queue = new LinkedBlockingQueue<>();
     private Set<UrlSeed> urlSet = Collections.synchronizedSet(new HashSet<>());
 
     @Override
     public void push(UrlSeed urlSeed) {
-        if (urlSeed.getUrl().equals("#") || urlSeed.getUrl().contains("javascript:"))
+        if (urlSeed.getUrl() == null
+                || urlSeed.getUrl().trim().equals("")
+                || urlSeed.getUrl().trim().equals("#")
+                || urlSeed.getUrl().trim().toLowerCase().contains("javascript:"))
             return;
         if (urlSet.add(urlSeed)) {
             queue.add(urlSeed);

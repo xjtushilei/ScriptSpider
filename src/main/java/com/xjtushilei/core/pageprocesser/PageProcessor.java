@@ -21,4 +21,13 @@ public interface PageProcessor {
      * @return
      */
     public Page process(Page page);
+
+    /**
+     * 新url种子进行额外的处理！（先进行了默认提供的正则处理！之后才进行这步）
+     * 把不符合自己要求的去掉，使爬虫可以结束！不然严重的话会爬取整个互联网！
+     *
+     * @param page
+     * @return
+     */
+    public Page regexNewUrlSeed(Page page);
 }

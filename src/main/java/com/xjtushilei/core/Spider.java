@@ -2,15 +2,21 @@ package com.xjtushilei.core;
 
 
 import com.xjtushilei.core.downloader.Downloader;
+import com.xjtushilei.core.downloader.HttpClientPoolDownloader;
 import com.xjtushilei.core.pageprocesser.PageProcessor;
+import com.xjtushilei.core.pageprocesser.TextPageProcessor;
+import com.xjtushilei.core.saver.ConsoleSaver;
 import com.xjtushilei.core.saver.Saver;
+import com.xjtushilei.core.scheduler.QueueScheduler;
 import com.xjtushilei.core.scheduler.Scheduler;
 import com.xjtushilei.model.Page;
+import com.xjtushilei.model.RegexRule;
 import com.xjtushilei.model.UrlSeed;
 import com.xjtushilei.utils.TimeSleep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -27,12 +33,15 @@ public class Spider {
     private PageProcessor pageProcessor;
     private Saver saver;
 
-    private int threadNum = 4;//线程池大小。默认4个爬虫在进行。
+    //新种子的过滤器，只有通过正则的，才会加入到待爬取种子队列
+    private RegexRule regexRule;
+
+    private int threadNum = 5;//线程池大小。默认5个爬虫在进行。
     private ThreadPoolExecutor pool;
 
     /**
      * 最多几个爬虫在进行。
-     * 默认4个。
+     * 默认5个。
      *
      * @param threadNum
      * @return
@@ -40,7 +49,7 @@ public class Spider {
     public Spider thread(int threadNum) {
         this.threadNum = threadNum;
         if (threadNum <= 0) {
-            this.threadNum = 4;
+            this.threadNum = 5;
         }
         pool = new ThreadPoolExecutor(threadNum, threadNum,
                 1500L, TimeUnit.MILLISECONDS,
@@ -50,6 +59,11 @@ public class Spider {
 
     public static Spider build() {
         return new Spider();
+    }
+
+    public Spider() {
+        setDefaultComponents();
+        regexRule = new RegexRule();
     }
 
     public Spider setScheduler(Scheduler scheduler) {
@@ -72,8 +86,53 @@ public class Spider {
         return this;
     }
 
+    /**
+     * 添加初始化种子，可以多个
+     *
+     * @param url
+     * @return Spider
+     */
     public Spider addUrlSeed(String url) {
         scheduler.push(new UrlSeed(url));
+        return this;
+    }
+
+    /**
+     * 添加新种子需要满足的正则信息（正则规则有两种，正正则和反正则）
+     * <p>
+     * URL符合正则规则需要满足下面条件：
+     * 1.至少能匹配一条正正则
+     * 2.不能和任何反正则匹配
+     * 举例：
+     * 正正则示例：+a.*c是一条正正则，正则的内容为a.*c，起始加号表示正正则
+     * 反正则示例：-a.*c时一条反正则，正则的内容为a.*c，起始减号表示反正则
+     * 如果一个规则的起始字符不为加号且不为减号，则该正则为正正则，正则的内容为自身
+     * 例如a.*c是一条正正则，正则的内容为a.*c
+     *
+     * @param regex 正则
+     * @return Spider
+     */
+    public Spider addRegexRule(String regex) {
+        regexRule.addRule(regex);
+        return this;
+    }
+
+    private Spider setDefaultComponents() {
+
+        thread(threadNum);
+
+        if (scheduler == null) {
+            scheduler = new QueueScheduler();
+        }
+        if (downloader == null) {
+            downloader = new HttpClientPoolDownloader();
+        }
+        if (pageProcessor == null) {
+            pageProcessor = new TextPageProcessor();
+        }
+        if (saver == null) {
+            saver = new ConsoleSaver();
+        }
         return this;
     }
 
@@ -124,6 +183,16 @@ public class Spider {
             Page nowPage = downloader.download(urlSeed);
 
             pageProcessor.process(nowPage);
+
+            //正则处理
+            List<UrlSeed> urlSeedList = nowPage.links();
+            urlSeedList.forEach(seed -> {
+                if (!regexRule.regex(seed.getUrl())) {
+                    urlSeedList.remove(seed);
+                }
+            });
+            nowPage.setNewUrlSeed(urlSeedList);
+            pageProcessor.regexNewUrlSeed(nowPage);
 
             nowPage.getNewUrlSeed().forEach(seed -> scheduler.push(seed));
 

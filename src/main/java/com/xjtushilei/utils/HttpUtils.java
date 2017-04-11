@@ -33,6 +33,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 public class HttpUtils {
@@ -121,7 +123,7 @@ public class HttpUtils {
         if (httpClientConnectionManager != null && httpClientConnectionManager.getTotalStats() != null) {
             logger.info("httpclient连接池: " + httpClientConnectionManager.getTotalStats().toString());
         }
-        System.out.println(HttpClients.custom());
+        //        System.out.println(HttpClients.custom());
         return httpClient;
     }
 
@@ -155,7 +157,6 @@ public class HttpUtils {
             //设置USER_AGENT
             Random random = new Random();
             int randomInt = random.nextInt(4);
-            System.err.println(randomInt);
 
             httpGet.addHeader("User-Agent", USER_AGENT[randomInt]);
             //此处的代理暂时注释
@@ -188,16 +189,8 @@ public class HttpUtils {
                      * 浏览器是先从content-type的charset（响应头信息）中获取编码，
                      * 如果获取不了，则会从meta（HTML里的代码）中获取charset的编码值
                      */
-                    //第一步-->处理网页字符编码
-                    String charset = null;
-                    ContentType contentType = null;
-                    contentType = ContentType.getOrDefault(entity);
-                    Charset charsets = contentType.getCharset();
-                    if (null != charsets) {
-                        charset = charsets.toString();
-                    } else {
-                        charset = "utf-8";
-                    }
+
+
                     //判断返回的数据流是否采用了gzip压缩
                     Header header = entity.getContentEncoding();
                     boolean isGzip = false;
@@ -224,6 +217,25 @@ public class HttpUtils {
                         }
                     }
                     //根据获取的字符编码转为string类型
+                    String charset = null;
+                    ContentType contentType = null;
+                    System.out.println(entity);
+                    contentType = ContentType.getOrDefault(entity);
+                    Charset charsets = contentType.getCharset();
+                    src = new String(buffer.toByteArray());
+                    if (null != charsets) {
+                        charset = charsets.toString();
+                    } else {
+                        //发现httpclient带的功能有问题，这里自己又写了一下。
+                        Pattern pattern = Pattern.compile("<head>([\\s\\S]*?)<meta([\\s\\S]*?)charset\\s*=(\")?(.*?)\"");
+                        Matcher matcher = pattern.matcher(src.toLowerCase());
+                        if (matcher.find()) {
+                            charset = matcher.group(4);
+                        } else {
+                            charset = "utf-8";
+                        }
+                    }
+                    logger.debug(charset);
                     src = new String(buffer.toByteArray(), charset);
 
                     //转化Unicode编码格式]
@@ -283,7 +295,7 @@ public class HttpUtils {
 
 
     public static void main(String[] args) throws IOException {
-        String url = "https://github.com/glshi/testlive/blob/685be0f1334493ece609f6d112c5d9841242cd64/src/main/java/com/li/tools/httpclient/test/SSLClient.java";
+        String url = "http://newsxq.xjtu.edu.cn/info/1007/74611.htm";
         getInstance().get(url);
         //            System.out.println(Jsoup.connect(url).get().html());
     }
