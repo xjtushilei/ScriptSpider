@@ -1,4 +1,4 @@
-package com.xjtushilei.utils;
+package com.github.xjtushilei.utils;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -219,7 +219,6 @@ public class HttpUtils {
                     //根据获取的字符编码转为string类型
                     String charset = null;
                     ContentType contentType = null;
-                    System.out.println(entity);
                     contentType = ContentType.getOrDefault(entity);
                     Charset charsets = contentType.getCharset();
                     src = new String(buffer.toByteArray());

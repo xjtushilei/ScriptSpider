@@ -1,6 +1,6 @@
-package com.xjtushilei.core.pageprocesser;
+package com.github.xjtushilei.core.pageprocesser;
 
-import com.xjtushilei.model.Page;
+import com.github.xjtushilei.model.Page;
 
 /**
  * 解析页面使用

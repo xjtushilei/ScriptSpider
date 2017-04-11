@@ -1,4 +1,4 @@
-package com.xjtushilei.model;
+package com.github.xjtushilei.model;
 
 /**
  * Created by shilei on 2017/4/10.

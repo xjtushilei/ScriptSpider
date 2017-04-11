@@ -1,6 +1,6 @@
-package com.xjtushilei.core.saver;
+package com.github.xjtushilei.core.saver;
 
-import com.xjtushilei.model.Page;
+import com.github.xjtushilei.model.Page;
 
 import java.util.Map;
 

@@ -1,21 +1,22 @@
-package com.xjtushilei.core;
+package com.github.xjtushilei.core;
 
 
-import com.xjtushilei.core.downloader.Downloader;
-import com.xjtushilei.core.downloader.HttpClientPoolDownloader;
-import com.xjtushilei.core.pageprocesser.PageProcessor;
-import com.xjtushilei.core.pageprocesser.TextPageProcessor;
-import com.xjtushilei.core.saver.ConsoleSaver;
-import com.xjtushilei.core.saver.Saver;
-import com.xjtushilei.core.scheduler.QueueScheduler;
-import com.xjtushilei.core.scheduler.Scheduler;
-import com.xjtushilei.model.Page;
-import com.xjtushilei.model.RegexRule;
-import com.xjtushilei.model.UrlSeed;
-import com.xjtushilei.utils.TimeSleep;
+import com.github.xjtushilei.core.downloader.Downloader;
+import com.github.xjtushilei.core.downloader.HttpClientPoolDownloader;
+import com.github.xjtushilei.core.pageprocesser.PageProcessor;
+import com.github.xjtushilei.core.pageprocesser.TextPageProcessor;
+import com.github.xjtushilei.core.saver.ConsoleSaver;
+import com.github.xjtushilei.core.saver.Saver;
+import com.github.xjtushilei.core.scheduler.QueueScheduler;
+import com.github.xjtushilei.core.scheduler.Scheduler;
+import com.github.xjtushilei.model.Page;
+import com.github.xjtushilei.model.RegexRule;
+import com.github.xjtushilei.model.UrlSeed;
+import com.github.xjtushilei.utils.TimeSleep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -186,11 +187,12 @@ public class Spider {
 
             //正则处理
             List<UrlSeed> urlSeedList = nowPage.links();
-            urlSeedList.forEach(seed -> {
+            for (Iterator<UrlSeed> it = urlSeedList.iterator(); it.hasNext(); ) {
+                UrlSeed seed = it.next();
                 if (!regexRule.regex(seed.getUrl())) {
-                    urlSeedList.remove(seed);
+                    it.remove();
                 }
-            });
+            }
             nowPage.setNewUrlSeed(urlSeedList);
             pageProcessor.regexNewUrlSeed(nowPage);
 

@@ -1,4 +1,4 @@
-package com.xjtushilei.test;
+package com.github.xjtushilei.test;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

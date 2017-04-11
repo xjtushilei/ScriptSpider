@@ -1,6 +1,6 @@
-package com.xjtushilei.core.scheduler;
+package com.github.xjtushilei.core.scheduler;
 
-import com.xjtushilei.model.UrlSeed;
+import com.github.xjtushilei.model.UrlSeed;
 
 /**
  * 调度器

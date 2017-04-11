@@ -1,4 +1,4 @@
-package com.xjtushilei.redis;
+package com.github.xjtushilei.redis;
 
 
 /**

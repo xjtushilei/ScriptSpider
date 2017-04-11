@@ -1,4 +1,4 @@
-package com.xjtushilei.model;
+package com.github.xjtushilei.model;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -74,6 +74,10 @@ public class RegexRule {
      * @return 输入字符串是否符合正则规则
      */
     public boolean regex(String str) {
+
+        if (positiveRule.size() == 0) {
+            return true;
+        }
 
         int state = 0;
         for (String nregex : negativerule) {

@@ -1,8 +1,8 @@
-package com.xjtushilei.core.downloader;
+package com.github.xjtushilei.core.downloader;
 
-import com.xjtushilei.model.Page;
-import com.xjtushilei.model.UrlSeed;
-import com.xjtushilei.utils.HttpUtils;
+import com.github.xjtushilei.model.Page;
+import com.github.xjtushilei.model.UrlSeed;
+import com.github.xjtushilei.utils.HttpUtils;
 
 /**
  * Created by shilei on 2017/4/10.

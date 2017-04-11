@@ -1,6 +1,6 @@
-package com.xjtushilei.model;
+package com.github.xjtushilei.model;
 
-import com.xjtushilei.utils.HttpUtils;
+import com.github.xjtushilei.utils.HttpUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,12 +39,15 @@ public class Page {
     }
 
     public Page(UrlSeed urlSeed, String html) {
+        newUrlSeed = new ArrayList<>();
+        items = new HashMap<>();
         this.urlSeed = urlSeed;
         this.document = Jsoup.parse(html, urlSeed.getUrl());
     }
 
     public Page() {
         newUrlSeed = new ArrayList<>();
+        items = new HashMap<>();
     }
 
     public List<UrlSeed> links() {
