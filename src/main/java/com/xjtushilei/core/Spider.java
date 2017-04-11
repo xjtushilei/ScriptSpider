@@ -11,8 +11,9 @@ import com.xjtushilei.utils.TimeSleep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by shilei on 2017/4/10.
@@ -27,7 +28,7 @@ public class Spider {
     private Saver saver;
 
     private int threadNum = 4;//线程池大小。默认4个爬虫在进行。
-    private ExecutorService pool;
+    private ThreadPoolExecutor pool;
 
     /**
      * 最多几个爬虫在进行。
@@ -41,6 +42,9 @@ public class Spider {
         if (threadNum <= 0) {
             this.threadNum = 4;
         }
+        pool = new ThreadPoolExecutor(threadNum, threadNum,
+                1500L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>());
         return this;
     }
 
@@ -68,37 +72,38 @@ public class Spider {
         return this;
     }
 
+    public Spider addUrlSeed(String url) {
+        scheduler.push(new UrlSeed(url));
+        return this;
+    }
 
     public void run() {
 
         logger.info("爬虫启动!");
-        pool = Executors.newFixedThreadPool(threadNum);
+
 
         UrlSeed urlSeed = null;
-        if ((urlSeed = scheduler.poll()) == null) {
-            logger.error("获取第一个种子失败，请检查相关队列或集合！");
-            return;
-        }
-        Thread initThread = new Thread(new SpiderWork(urlSeed));
-        initThread.start();
-        try {
-            initThread.join();
-        } catch (InterruptedException e) {
-            logger.error("种子线程初始化失败，请检查种子！", e);
-        }
-
-        int loopCout = 0;
-        //五次取种子，取失败则认为不存在种子
-        while (loopCout < 5) {
-
-            if ((urlSeed = scheduler.poll()) == null) {
-                loopCout++;
-                //暂停1.5秒，继续取种子
-                TimeSleep.sleep(1500);
+        while (true) {
+            logger.info("当前线程池" + "已完成:" + pool.getCompletedTaskCount() + "   运行中：" + pool.getActiveCount() + "  最大:" + pool.getPoolSize());
+            urlSeed = scheduler.poll();
+            if (urlSeed == null && pool.getActiveCount() == 0) {
+                pool.shutdown();
+                try {
+                    pool.awaitTermination(10, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    logger.error("关闭线程池失败！", e);
+                }
+                logger.info("爬虫结束！");
+                break;
+            } else if (urlSeed == null) {
+                //没有取到种子就等待!
+                TimeSleep.sleep(1000);
             } else {
+                logger.info("正在处理:" + urlSeed.getUrl() + "  优先级(默认:5):" + urlSeed.getPriority());
                 pool.execute(new SpiderWork(urlSeed.clone()));
             }
         }
+
     }
 
     class SpiderWork implements Runnable {
@@ -118,9 +123,9 @@ public class Spider {
 
             Page nowPage = downloader.download(urlSeed);
 
-
             pageProcessor.process(nowPage);
 
+            nowPage.getNewUrlSeed().forEach(seed -> scheduler.push(seed));
 
             saver.save(nowPage);
 

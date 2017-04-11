@@ -6,13 +6,24 @@ package com.xjtushilei.model;
 public class UrlSeed implements Cloneable {
 
 
-    private String url;
+
 
     /**
-     * 优先级，优先级越大越优先，提前被收走。
+     * 优先级(默认是5)，优先级越大越优先，提前被收走。
      * 备注：这里需要自己实现，比如优先队列实现。如果无实现，则默认级别。
      */
-    private long priority;
+    private long priority = 5;
+    private String url;
+
+    public UrlSeed(long priority, String url) {
+        this.priority = priority;
+        this.url = url;
+    }
+
+    public UrlSeed(String url) {
+        this.priority = 5;
+        this.url = url;
+    }
 
     public String getUrl() {
         return url;
