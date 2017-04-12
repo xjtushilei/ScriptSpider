@@ -45,7 +45,7 @@ public class Spider {
      * 默认5个。
      *
      * @param threadNum
-     * @return
+     * @return 自己
      */
     public Spider thread(int threadNum) {
         this.threadNum = threadNum;
@@ -144,7 +144,7 @@ public class Spider {
 
         UrlSeed urlSeed = null;
         while (true) {
-            logger.info("当前线程池" + "已完成:" + pool.getCompletedTaskCount() + "   运行中：" + pool.getActiveCount() + "  最大:" + pool.getPoolSize());
+            logger.info("当前线程池" + "已完成:" + pool.getCompletedTaskCount() + "   运行中：" + pool.getActiveCount() + "  最大运行:" + pool.getPoolSize() + " 等待队列:" + pool.getQueue().size());
             urlSeed = scheduler.poll();
             if (urlSeed == null && pool.getActiveCount() == 0) {
                 pool.shutdown();
@@ -177,19 +177,21 @@ public class Spider {
 
         public void run() {
 
+            logger.debug("线程:[" + Thread.currentThread().getName() + "]正在处理:" + urlSeed.getUrl());
+            logger.debug("当前线程池" + "已完成:" + pool.getCompletedTaskCount() + "   运行中：" + pool.getActiveCount() + "  最大运行:" + pool.getPoolSize() + " 等待队列:" + pool.getQueue().size());
+
             //整个流程为:
             // (download下载) ->  (pageProcessor解析处理) ->  (save存储)
-
 
             Page nowPage = downloader.download(urlSeed);
 
             pageProcessor.process(nowPage);
-
             //正则处理
             List<UrlSeed> urlSeedList = nowPage.links();
             for (Iterator<UrlSeed> it = urlSeedList.iterator(); it.hasNext(); ) {
                 UrlSeed seed = it.next();
                 if (!regexRule.regex(seed.getUrl())) {
+                    //                    System.out.println(seed.getUrl());
                     it.remove();
                 }
             }
@@ -199,7 +201,6 @@ public class Spider {
             nowPage.getNewUrlSeed().forEach(seed -> scheduler.push(seed));
 
             saver.save(nowPage);
-
 
         }
     }

@@ -15,6 +15,14 @@ public class UrlSeed implements Cloneable {
     private long priority = 5;
     private String url;
 
+    @Override
+    public String toString() {
+        return "UrlSeed{" +
+                "priority=" + priority +
+                ", url='" + url + '\'' +
+                '}';
+    }
+
     public UrlSeed(long priority, String url) {
         this.priority = priority;
         this.url = url;

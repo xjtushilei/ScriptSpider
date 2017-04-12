@@ -73,7 +73,7 @@ public class HttpUtils {
     /**
      * 单例
      *
-     * @return
+     * @return 单例
      */
     public static HttpUtils getInstance() {
         return httpUtils;
@@ -114,16 +114,15 @@ public class HttpUtils {
     /**
      * 多线程调用时，获取httpclient
      *
-     * @return
+     * @return httpclient实例
      */
     public CloseableHttpClient getHttpClient() {
         RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(connectionRequestTimeout)
                 .setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout).build();
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(httpClientConnectionManager).setDefaultRequestConfig(requestConfig).build();
         if (httpClientConnectionManager != null && httpClientConnectionManager.getTotalStats() != null) {
-            logger.info("httpclient连接池: " + httpClientConnectionManager.getTotalStats().toString());
+            //            logger.info("httpclient连接池: " + httpClientConnectionManager.getTotalStats().toString());
         }
-        //        System.out.println(HttpClients.custom());
         return httpClient;
     }
 
@@ -132,7 +131,7 @@ public class HttpUtils {
      * get请求页面
      *
      * @param urlString
-     * @return
+     * @return 获得的页面
      */
     public String get(String urlString) {
         String src = "";
@@ -234,7 +233,6 @@ public class HttpUtils {
                             charset = "utf-8";
                         }
                     }
-                    logger.debug(charset);
                     src = new String(buffer.toByteArray(), charset);
 
                     //转化Unicode编码格式]

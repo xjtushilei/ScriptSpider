@@ -73,7 +73,7 @@ public class SimpleSpider {
         /**
          * 如果你自己想处理url(之前已经经过了正则过滤,或者初始化的时候不添加正则信息 !)，这里可以自己增加自己的方法（除了正则，因为已经默认实现了正则，除非你想在这里再次实现也没有关系）！
          * @param page
-         * @return
+         * @return 自己
          */
         @Override
         public Page regexNewUrlSeed(Page page) {
@@ -85,6 +85,8 @@ public class SimpleSpider {
      * 实现自己的保存器！可以将爬取到的结果放入到mongodb，mysql等等中！这里保存到<当前用户>的“ScriptSpider”目录下。
      * <p>
      * 这里是在一个文件里实现的，若果你的功能比较多，完全可以用新的class文件来生成，并在上面set即可！
+     *
+     * 提醒：运行结束会产生大量的文件！建议运行几秒即可！
      */
     static Saver mySaver = new Saver() {
 

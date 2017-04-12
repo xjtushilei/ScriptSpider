@@ -24,7 +24,7 @@ public class RegexRule {
      * 例如a.*c是一条正正则，正则的内容为a.*c
      *
      * @param rule 正则规则
-     * @return
+     * @return 自己
      */
     public RegexRule addRule(String rule) {
         if (rule.length() == 0) {
@@ -47,7 +47,7 @@ public class RegexRule {
      * 添加一个正正则规则
      *
      * @param positiveregex
-     * @return
+     * @return 自己
      */
     public RegexRule addPositive(String positiveregex) {
         positiveRule.add(positiveregex);
@@ -59,7 +59,7 @@ public class RegexRule {
      * 添加一个反正则规则
      *
      * @param negativeregex
-     * @return
+     * @return 自己
      */
     public RegexRule addNegative(String negativeregex) {
         negativerule.add(negativeregex);

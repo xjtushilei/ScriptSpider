@@ -29,7 +29,7 @@ public class QueueScheduler implements Scheduler {
         if (urlSet.add(urlSeed)) {
             queue.add(urlSeed);
         } else {
-            logger.info("UrlSeed重复:" + urlSeed.getUrl());
+            //            logger.info("UrlSeed重复:" + urlSeed.getUrl());
 
         }
     }
