@@ -1,5 +1,6 @@
-package com.github.xjtushilei.core.pageprocesser;
+package com.github.xjtushilei.core.pageprocesser.PreDefine;
 
+import com.github.xjtushilei.core.pageprocesser.PageProcessor;
 import com.github.xjtushilei.model.Page;
 import org.jsoup.nodes.Document;
 

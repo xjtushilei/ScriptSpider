@@ -1,5 +1,6 @@
-package com.github.xjtushilei.core.scheduler;
+package com.github.xjtushilei.core.scheduler.PreDefine;
 
+import com.github.xjtushilei.core.scheduler.Scheduler;
 import com.github.xjtushilei.model.UrlSeed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

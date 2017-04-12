@@ -1,5 +1,6 @@
-package com.github.xjtushilei.core.downloader;
+package com.github.xjtushilei.core.downloader.PreDefine;
 
+import com.github.xjtushilei.core.downloader.Downloader;
 import com.github.xjtushilei.model.Page;
 import com.github.xjtushilei.model.UrlSeed;
 import com.github.xjtushilei.utils.HttpUtils;

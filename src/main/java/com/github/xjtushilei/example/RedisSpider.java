@@ -3,7 +3,7 @@ package com.github.xjtushilei.example;
 import com.github.xjtushilei.core.Spider;
 import com.github.xjtushilei.core.pageprocesser.PageProcessor;
 import com.github.xjtushilei.core.saver.Saver;
-import com.github.xjtushilei.core.scheduler.RedisScheduler;
+import com.github.xjtushilei.core.scheduler.PreDefine.RedisScheduler;
 import com.github.xjtushilei.model.Page;
 import org.jsoup.nodes.Document;
 

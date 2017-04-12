@@ -1,5 +1,6 @@
-package com.github.xjtushilei.core.saver;
+package com.github.xjtushilei.core.saver.PreDefine;
 
+import com.github.xjtushilei.core.saver.Saver;
 import com.github.xjtushilei.model.Page;
 
 import java.util.Map;

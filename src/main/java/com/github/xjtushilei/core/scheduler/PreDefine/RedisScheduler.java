@@ -1,5 +1,6 @@
-package com.github.xjtushilei.core.scheduler;
+package com.github.xjtushilei.core.scheduler.PreDefine;
 
+import com.github.xjtushilei.core.scheduler.Scheduler;
 import com.github.xjtushilei.model.UrlSeed;
 import com.github.xjtushilei.utils.RedisUtils;
 import com.google.gson.Gson;

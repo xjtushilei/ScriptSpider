@@ -2,12 +2,12 @@ package com.github.xjtushilei.core;
 
 
 import com.github.xjtushilei.core.downloader.Downloader;
-import com.github.xjtushilei.core.downloader.HttpClientPoolDownloader;
+import com.github.xjtushilei.core.downloader.PreDefine.HttpClientPoolDownloader;
 import com.github.xjtushilei.core.pageprocesser.PageProcessor;
-import com.github.xjtushilei.core.pageprocesser.TextPageProcessor;
-import com.github.xjtushilei.core.saver.ConsoleSaver;
+import com.github.xjtushilei.core.pageprocesser.PreDefine.TextPageProcessor;
+import com.github.xjtushilei.core.saver.PreDefine.ConsoleSaver;
 import com.github.xjtushilei.core.saver.Saver;
-import com.github.xjtushilei.core.scheduler.QueueScheduler;
+import com.github.xjtushilei.core.scheduler.PreDefine.QueueScheduler;
 import com.github.xjtushilei.core.scheduler.Scheduler;
 import com.github.xjtushilei.model.Page;
 import com.github.xjtushilei.model.RegexRule;
