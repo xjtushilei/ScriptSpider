@@ -2,6 +2,9 @@
 
 ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 
+目前的功能已经够大多数情况下使用，ScriptSpider会朝着易用、高度、最新技术的方向发展！
+
+欢迎 **Star** 和 **Fork** 我的项目！
 
 #特点
 - Java开发（学习java的良方）
@@ -27,18 +30,25 @@ ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 <dependency>
     <groupId>com.github.xjtushilei</groupId>
     <artifactId>scriptspider</artifactId>
-    <version>0.1.1</version>
+    <version>0.2</version>
     <!--请尽量使用最新版本-->
 </dependency>
 ```
 
 关于版本
 
-请尽量使用最新版本，[http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cscriptspider) 中央仓库搜索最新版本
+请尽量使用最新版本，[http://search.maven.org](http://search.maven.org/#search%7Cga%7C1%7Cscriptspider),中央仓库搜索最新版本
 
 因为文档都是根据最新版本来及时更新的。
 
-### 使用jar包
+### 离线使用jar包
+
+在项目主页的 [releases目录](https://github.com/xjtushilei/ScriptSpider/releases)
+
+在最新的release下面，下载相应的所有的依赖包集合zip：`dependency.zip`。
+
+打开自己的工程，导入即可！
+
 
 # 如何开始
 
