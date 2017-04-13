@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class SimpleSpider {
 
-    //爬取《交大新闻网》的所有信息，并将信息打印到控制台！
+    //爬取《交大新闻网》的所有信息，并将信息输出到文本文件！
 
     public static void main(String[] args) {
         Spider.build()
@@ -76,8 +76,8 @@ public class SimpleSpider {
          * @return 自己
          */
         @Override
-        public Page regexNewUrlSeed(Page page) {
-            return null;
+        public Page processNewUrlSeeds(Page page) {
+            return page;
         }
     };
 

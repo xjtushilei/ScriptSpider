@@ -234,10 +234,6 @@ public class HttpUtils {
                         }
                     }
                     src = new String(buffer.toByteArray(), charset);
-
-                    //转化Unicode编码格式]
-                    //src = Common.decodeUnicode(src);
-                    //                    logger.info(src);
                     break;
                 case 400:
                     logger.info("下载400错误代码，请求出现语法错误" + urlString);
@@ -277,14 +273,6 @@ public class HttpUtils {
                 }
             }
             httpGet.abort();    //结束后关闭httpGet请求
-            /**
-             * httpclient的链接有线程池管理，这里不用直接关闭
-             */
-            //			try {//关闭连接
-            //				httpClient.close();
-            //			} catch (IOException e) {
-            //				e.printStackTrace();
-            //			}
         }
 
         return src;

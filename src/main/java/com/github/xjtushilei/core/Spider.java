@@ -145,6 +145,11 @@ public class Spider {
         UrlSeed urlSeed = null;
         while (true) {
             logger.info("当前线程池" + "已完成:" + pool.getCompletedTaskCount() + "   运行中：" + pool.getActiveCount() + "  最大运行:" + pool.getPoolSize() + " 等待队列:" + pool.getQueue().size());
+            if (pool.getQueue().size() > pool.getCorePoolSize()) {
+                //如果等待队列大于了100.就暂停接收新的url。不然会影响优先级队列的使用。
+                TimeSleep.sleep(1000);
+                continue;
+            }
             urlSeed = scheduler.poll();
             if (urlSeed == null && pool.getActiveCount() == 0) {
                 pool.shutdown();
@@ -196,7 +201,7 @@ public class Spider {
                 }
             }
             nowPage.setNewUrlSeed(urlSeedList);
-            pageProcessor.regexNewUrlSeed(nowPage);
+            pageProcessor.processNewUrlSeeds(nowPage);
 
             nowPage.getNewUrlSeed().forEach(seed -> scheduler.push(seed));
 

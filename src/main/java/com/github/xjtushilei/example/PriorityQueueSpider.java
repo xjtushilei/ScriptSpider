@@ -3,7 +3,7 @@ package com.github.xjtushilei.example;
 import com.github.xjtushilei.core.Spider;
 import com.github.xjtushilei.core.pageprocesser.PageProcessor;
 import com.github.xjtushilei.core.saver.Saver;
-import com.github.xjtushilei.core.scheduler.PreDefine.RedisScheduler;
+import com.github.xjtushilei.core.scheduler.PreDefine.PriorityQueueScheduler;
 import com.github.xjtushilei.model.Page;
 import org.jsoup.nodes.Document;
 
@@ -14,16 +14,16 @@ import java.util.regex.Pattern;
 /**
  * Created by shilei on 2017/4/12.
  */
-public class RedisSpider {
+public class PriorityQueueSpider {
 
     public static void main(String[] args) {
 
         Spider.build()
-                .setScheduler(new RedisScheduler()) //配置个性化的ip等请使用 RedisScheduler(String ip, int port, int MaxActive(建议100))
+                .setScheduler(new PriorityQueueScheduler()) //优先级队列调度器
                 .setSaver(mySaver)
                 .setProcessor(myPageProcessor)
-                .thread(5)
-                .addUrlSeed("http://news.xjtu.edu.cn")
+                .thread(10)
+                .addUrlSeed("http://news.xjtu.edu.cn/zsjy.htm")
                 .addRegexRule("+http://news.xjtu.edu.cn/.*") //限制爬取《交大新闻网》以外的其他站点的信息
                 .run();
     }
@@ -37,7 +37,7 @@ public class RedisSpider {
         @Override
         public Page save(Page page) {
             Map<Object, Object> map = page.getItems();
-
+            System.out.print(page.getUrlSeed().getPriority());
             map.forEach((k, v) -> System.out.println(k + " : " + v));
             return page;
         }
@@ -65,8 +65,8 @@ public class RedisSpider {
 
                 //用来存放爬取到的信息，供之后存储！map类型的即可，可以自定义各种嵌套！
                 Map<String, String> items = new HashMap<String, String>();
-                items.put("title", title);
                 items.put("url", page.getUrlSeed().getUrl());
+                items.put("title", title);
                 //放入items中，之后会自动保存（如果你自己实现了下载器，请自己操作它。如下我自定义了自己的下载器，并将它保存到了文本中！）！
                 page.setItems(items);
             } catch (NullPointerException e) {
@@ -76,15 +76,33 @@ public class RedisSpider {
         }
 
         /**
-         * 新url种子进行额外的处理！（先进行了默认提供的正则处理！之后才进行这步。建议功能：在这里进行优先级的调整！）
-         * <p>
-         * redis实现了优先级的。这里我们不做展示。优先级的用法请到示范：PriorityQueueScheduler.java 中查看。
-         * redis的默认优先级是5.并且只有三个优先级，高于5的，低于5的，等于5的。
-         * @param page
-         * @return 自己
+         * 这里进行了优先级的用法示范。
+         *
+         * 比如，你想在“交大新闻网”尽快或者优先爬取“招生就业”类型的新闻。
+         * 然后我们发现，这一类新闻的url符合 “http://newsxq.xjtu.edu.cn/info/1006/.*”
+         *
          */
         @Override
         public Page processNewUrlSeeds(Page page) {
+
+            //招生就业模块，符合 “http://newsxq.xjtu.edu.cn/info/1006/.*htm” 或者“http://news.xjtu.edu.cn/zsjy/.*htm”（翻页时候的url），进行设置高优先级设置
+            page.getNewUrlSeed().forEach(urlSeed -> {
+                if (Pattern.matches("http://news.xjtu.edu.cn/zsjy.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1006/.*htm", urlSeed.getUrl())) {
+                    urlSeed.setPriority(8);
+                }
+            });
+
+            //综合新闻 板块 ，符合“http://newsxq.xjtu.edu.cn/info/1002/.*htm” 或者"http://news.xjtu.edu.cn/zhxw.htm"(翻页时候的url），进行设置低优先级设置
+            page.getNewUrlSeed().forEach(urlSeed -> {
+                if (Pattern.matches("http://news.xjtu.edu.cn/zhxw.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1002/.*htm", urlSeed.getUrl())) {
+                    urlSeed.setPriority(2);
+                }
+            });
+
+            //接下来还能进行其他的优先级设置。
+
+            //优先级设置完之后，该页面新的url种子再进入待爬取队列的时候，就会自动进入优先队列！
+
             return page;
         }
     };

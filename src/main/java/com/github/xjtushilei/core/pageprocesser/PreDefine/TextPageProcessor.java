@@ -43,14 +43,13 @@ public class TextPageProcessor implements PageProcessor {
 
 
     /**
-     * url进行处理！
+     * url进行处理！建议功能：在这里进行新种子的优先级的调整！
      * 这里没有进行任何特殊的处理！ 因为我们推荐你使用正则处理（默认实现，在spider初始化的时候进行添加）！
      *
-     *  建议功能：在这里进行优先级的调整！
      * @param page
      * @return 自己
      */
-    public Page regexNewUrlSeed(Page page) {
+    public Page processNewUrlSeeds(Page page) {
 
 
         return page;

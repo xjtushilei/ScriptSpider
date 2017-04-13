@@ -13,7 +13,8 @@
 		SS是一个java版本的分布式的通用爬虫，可以热插拔各个组件（提供默认的），自动切换代理，自动结构化数据与存储。使用redis，分布式调度等技术。
 	</description>
 	<url>https://github.com/xjtushilei/ScriptSpider</url>
-	<licenses>
+
+    <licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
