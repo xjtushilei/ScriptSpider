@@ -361,6 +361,9 @@ public class PriorityQueueSpider {
 
 值得注意的是，redis的优先级调度，仅仅只有三个优先级（高优先级，默认优先级，低优先级）。因为大多数情况下，2个优先级已经足够你使用（而我们提供了三个）！
 
+多台部署：同样的代码，多台机器一个接一个启动就好了，不分先后。保证所有机器可以连接到redis的IP。
+
+
 ```java
 package com.github.xjtushilei.example;
 
@@ -383,7 +386,7 @@ public class RedisSpider {
     public static void main(String[] args) {
 
         Spider.build()
-                .setScheduler(new RedisScheduler()) //配置个性化的ip等请使用 RedisScheduler(String ip, int port, int MaxActive(建议100))
+                .setScheduler(new RedisScheduler()) //redis默认的ip和端口是127.0.0.1:6379.配置个性化的ip等请使用 RedisScheduler(String ip, int port, int MaxActive(建议100))
                 .setSaver(mySaver)
                 .setProcessor(myPageProcessor)
                 .thread(5)
