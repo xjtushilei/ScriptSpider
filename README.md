@@ -9,8 +9,8 @@ ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 
 # 项目主页
 
-* 国外：[@github](https://github.com/xjtushilei/ScriptSpider)
-* 国内：[@coding.net](https://coding.net/u/xjtushilei/p/ScriptSpider/git)
+* 国外：[github](https://github.com/xjtushilei/ScriptSpider)
+* 国内：[coding.net](https://coding.net/u/xjtushilei/p/ScriptSpider/git)
 
 
 
