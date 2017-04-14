@@ -6,6 +6,15 @@ ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 
 欢迎 **Star** 和 **Fork** 我的项目！
 
+
+# 项目主页
+
+* 国外：[@github](https://github.com/xjtushilei/ScriptSpider)
+* 国内：[@coding.net](https://coding.net/u/xjtushilei/p/ScriptSpider/git)
+
+
+
+
 # 特点
 - Java开发（学习java的良方）
 - 易理解（中文注释，多样例代码）
