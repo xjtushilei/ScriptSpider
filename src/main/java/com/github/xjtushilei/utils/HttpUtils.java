@@ -280,8 +280,8 @@ public class HttpUtils {
 
 
     public static void main(String[] args) throws IOException {
-        String url = "http://newsxq.xjtu.edu.cn/info/1007/74611.htm";
-        getInstance().get(url);
+        String url = "https://www.jd.com/";
+        System.out.println(getInstance().get(url));
         //            System.out.println(Jsoup.connect(url).get().html());
     }
 }
