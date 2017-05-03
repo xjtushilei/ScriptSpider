@@ -42,17 +42,17 @@ public class PriorityQueueScheduler implements Scheduler {
     }
 
     //优先级队列测试！
-    //    public static void main(String[] args){
-    //        PriorityBlockingQueue<UrlSeed> priorityQueue = new PriorityBlockingQueue<UrlSeed>(defaultPriority, (o1, o2) -> -((o1.getPriority() < o2.getPriority()) ? -1 : ((o1.getPriority() == o2.getPriority()) ? 0 : 1)));
-    //
-    //        priorityQueue.add(new UrlSeed(1,"1"));
-    //        priorityQueue.add(new UrlSeed(3,"3"));
-    //        priorityQueue.add(new UrlSeed(5,"5"));
-    //        priorityQueue.add(new UrlSeed(9,"9"));
-    //        priorityQueue.add(new UrlSeed(10,"10"));
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //
-    //    }
+        public static void main(String[] args){
+            PriorityBlockingQueue<UrlSeed> priorityQueue = new PriorityBlockingQueue<UrlSeed>(defaultPriority, (o1, o2) -> -((o1.getPriority() < o2.getPriority()) ? -1 : ((o1.getPriority() == o2.getPriority()) ? 0 : 1)));
+    
+            priorityQueue.add(new UrlSeed(1,"1"));
+            priorityQueue.add(new UrlSeed(3,"3"));
+            priorityQueue.add(new UrlSeed(5,"5"));
+            priorityQueue.add(new UrlSeed(9,"9"));
+            priorityQueue.add(new UrlSeed(10,"10"));
+            System.out.println(priorityQueue.poll().getUrl());
+            System.out.println(priorityQueue.poll().getUrl());
+            System.out.println(priorityQueue.poll().getUrl());
+    
+        }
 }
