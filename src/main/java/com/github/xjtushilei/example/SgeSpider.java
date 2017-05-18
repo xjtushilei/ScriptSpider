@@ -64,7 +64,7 @@ public class SgeSpider {
                 Elements tDate = htmldoc.getElementsMatchingText("时间:");
                 String tmp = tDate.text();
                 int index = tmp.indexOf("时间:");
-                String time = tmp.substring(index+3,index+13) + " 08:00:00";
+                String time = tmp.substring(index+3,index+13) + " 15:30:00";
                 System.out.println("===>"+time);
                 Elements es = htmldoc.getElementsByTag("table");
                 Element e = es.get(0);
@@ -85,9 +85,9 @@ public class SgeSpider {
                         line.setVolume(Double.valueOf(texts[8].replaceAll(",","")));
                         line.setStatus(1);
                         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        LocalDateTime statTime = LocalDateTime.parse(time,df);
-                        line.setStartTime(statTime);
-                        line.setEndTime(statTime.plusDays(1));
+                        LocalDateTime endTime = LocalDateTime.parse(time,df);
+                        line.setStartTime(getStatTime(endTime));
+                        line.setEndTime(endTime);
                         line.setCreateTime(LocalDateTime.now());
                         line.setLevel("1440");
 
@@ -98,6 +98,7 @@ public class SgeSpider {
 
                         if (tdText.contains("mAuT+D ") || tdText.contains("mAu(T+D) ") || tdText.contains("mAu（T+D) ")) {
                             line.setCode("MAUT+D");
+                            line.setVolume(line.getVolume()*10);
                             lineList.add(line);
                             continue;
                         }
@@ -128,6 +129,7 @@ public class SgeSpider {
                         line.setVolume(Double.valueOf(texts[7].replaceAll(",","")));
                         if (tdText.contains("mAuT+D ") || tdText.contains("mAu(T+D) ") || tdText.contains("mAu（T+D) ")) {
                             line.setCode("MAUT+D");
+                            line.setVolume(line.getVolume()*10);
                             lineList.add(line);
                             continue;
                         }
@@ -160,6 +162,14 @@ public class SgeSpider {
             }
 
             return page;
+        }
+
+        private LocalDateTime getStatTime(LocalDateTime endTime) {
+            LocalDateTime startTime = endTime.minusDays(1).withHour(20).withMinute(0);
+            if(startTime.getDayOfWeek().getValue() == 7) {
+                startTime = startTime.minusDays(2);
+            }
+            return startTime;
         }
 
         private String getDirection(String text, String direction) {
