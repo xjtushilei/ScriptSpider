@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author scriptshi
- * @date 2018/3/29
+ * 2018/3/29
  */
 public class 页面解析器 implements PageProcessor {
 
@@ -42,8 +42,7 @@ public class 页面解析器 implements PageProcessor {
     /**
      * 给需要存储的页面设置高的优先级，这样可以快速保存
      *
-     * @param page
-     * @return page
+     * @param page page
      */
     @Override
     public void processNewUrlSeeds(Page page) {

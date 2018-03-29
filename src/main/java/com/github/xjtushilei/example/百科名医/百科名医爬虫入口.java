@@ -5,7 +5,7 @@ import com.github.xjtushilei.core.scheduler.PreDefine.PriorityQueueScheduler;
 
 /**
  * @author scriptshi
- * @date 2018/3/29
+ * 2018/3/29
  */
 public class 百科名医爬虫入口 {
     public static void main(String[] args) {

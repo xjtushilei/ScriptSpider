@@ -11,6 +11,7 @@ public interface Downloader {
 
     /**
      * @param urlSeed 下载url页面
+     * @return Page page
      */
     Page download(UrlSeed urlSeed);
 }

@@ -35,6 +35,7 @@ public class RedisUtils {
      * @param ip    redis ip
      * @param port  port
      * @param Max_Active    最大连接数
+     * @return jedis连接池
      */
     public static JedisPool getJedisPool(String ip, int port, int Max_Active) {
         try {

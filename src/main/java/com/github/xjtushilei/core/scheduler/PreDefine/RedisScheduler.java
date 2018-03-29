@@ -24,8 +24,8 @@ public class RedisScheduler implements Scheduler {
     /**
      * redis调度器进行初始化
      *
-     * @param ip
-     * @param port
+     * @param ip ip
+     * @param port ip的端口
      * @param MaxActive 最多可以同时并发连接！建议设置为5000以上即可！
      */
     public RedisScheduler(String ip, int port, int MaxActive) {

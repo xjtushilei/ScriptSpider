@@ -46,7 +46,7 @@ public class RegexRule {
     /**
      * 添加一个正正则规则
      *
-     * @param positiveregex
+     * @param positiveregex 正向正则规则
      * @return 自己
      */
     public RegexRule addPositive(String positiveregex) {
@@ -58,7 +58,7 @@ public class RegexRule {
     /**
      * 添加一个反正则规则
      *
-     * @param negativeregex
+     * @param negativeregex  反正则规则
      * @return 自己
      */
     public RegexRule addNegative(String negativeregex) {

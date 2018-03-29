@@ -13,14 +13,14 @@ public interface Scheduler {
     /**
      * 写进去url种子
      *
-     * @param urlSeed
+     * @param urlSeed urlseed
      */
-    public void push(UrlSeed urlSeed);
+    void push(UrlSeed urlSeed);
 
     /**
      * poll种子
      *
      * @return UrlSeed
      */
-    public UrlSeed poll();
+    UrlSeed poll();
 }

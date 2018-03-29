@@ -130,7 +130,7 @@ public class HttpUtils {
     /**
      * get请求页面
      *
-     * @param urlString
+     * @param urlString url
      * @return 获得的页面
      */
     public String get(String urlString) {

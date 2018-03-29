@@ -43,7 +43,7 @@ public class Spider {
      * 最多几个爬虫在进行。
      * 默认5个。
      *
-     * @param threadNum
+     * @param threadNum 线程数量
      * @return 自己
      */
     public Spider thread(int threadNum) {
@@ -89,7 +89,7 @@ public class Spider {
     /**
      * 添加初始化种子，可以多个
      *
-     * @param url
+     * @param url url
      * @return Spider
      */
     public Spider addUrlSeed(String url) {
