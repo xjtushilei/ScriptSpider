@@ -38,8 +38,8 @@ ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 <dependency>
     <groupId>com.github.xjtushilei</groupId>
     <artifactId>scriptspider</artifactId>
-    <version>0.2</version>
-    <!--请尽量使用最新版本-->
+    <version>0.3</version>
+    <!--请尽量使用最新版本. update time：2018年3月29日18:37:44-->
 </dependency>
 ```
 
