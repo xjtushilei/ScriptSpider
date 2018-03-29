@@ -460,3 +460,7 @@ public class RedisSpider {
 }
 
 ```
+
+### 优先级spider 真实任务
+
+爬取了名医百科的所有的疾病消息,并存到了本地json文本文件。具体请见`com.github.xjtushilei.example.百科名医`。
