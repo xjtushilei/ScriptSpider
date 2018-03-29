@@ -79,7 +79,6 @@ public class RegexRule {
             return true;
         }
 
-        int state = 0;
         for (String nregex : negativerule) {
             if (Pattern.matches(nregex, str)) {
                 return false;

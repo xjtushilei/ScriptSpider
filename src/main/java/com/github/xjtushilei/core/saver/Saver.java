@@ -7,5 +7,5 @@ import com.github.xjtushilei.model.Page;
  */
 public interface Saver {
 
-    public Page save(Page page);
+    void save(Page page);
 }

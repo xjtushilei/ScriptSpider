@@ -35,11 +35,10 @@ public class PriorityQueueSpider {
      */
     static Saver mySaver = new Saver() {
         @Override
-        public Page save(Page page) {
+        public void save(Page page) {
             Map<Object, Object> map = page.getItems();
             System.out.print(page.getUrlSeed().getPriority());
             map.forEach((k, v) -> System.out.println(k + " : " + v));
-            return page;
         }
     };
 
@@ -51,11 +50,11 @@ public class PriorityQueueSpider {
     static PageProcessor myPageProcessor = new PageProcessor() {
 
         @Override
-        public Page process(Page page) {
+        public void process(Page page) {
 
             //如果不匹配，则不进行解析！
             if (!Pattern.matches("http://news.xjtu.edu.cn/info/.*htm", page.getUrlSeed().getUrl())) {
-                return page;
+                return;
             }
 
             Document htmldoc = page.getDocument();
@@ -72,7 +71,6 @@ public class PriorityQueueSpider {
             } catch (NullPointerException e) {
                 System.out.println("该页面没有解析到相关东西！跳过");
             }
-            return page;
         }
 
         /**
@@ -83,7 +81,7 @@ public class PriorityQueueSpider {
          *
          */
         @Override
-        public Page processNewUrlSeeds(Page page) {
+        public void processNewUrlSeeds(Page page) {
 
             //招生就业模块，符合 “http://newsxq.xjtu.edu.cn/info/1006/.*htm” 或者“http://news.xjtu.edu.cn/zsjy/.*htm”（翻页时候的url），进行设置高优先级设置
             page.getNewUrlSeed().forEach(urlSeed -> {
@@ -103,7 +101,6 @@ public class PriorityQueueSpider {
 
             //优先级设置完之后，该页面新的url种子再进入待爬取队列的时候，就会自动进入优先队列！
 
-            return page;
         }
     };
 

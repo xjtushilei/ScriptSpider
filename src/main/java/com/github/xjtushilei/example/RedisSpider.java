@@ -35,11 +35,10 @@ public class RedisSpider {
      */
     static Saver mySaver = new Saver() {
         @Override
-        public Page save(Page page) {
+        public void save(Page page) {
             Map<Object, Object> map = page.getItems();
 
             map.forEach((k, v) -> System.out.println(k + " : " + v));
-            return page;
         }
     };
 
@@ -51,11 +50,11 @@ public class RedisSpider {
     static PageProcessor myPageProcessor = new PageProcessor() {
 
         @Override
-        public Page process(Page page) {
+        public void process(Page page) {
 
             //如果不匹配，则不进行解析！
             if (!Pattern.matches("http://news.xjtu.edu.cn/info/.*htm", page.getUrlSeed().getUrl())) {
-                return page;
+                return;
             }
 
             Document htmldoc = page.getDocument();
@@ -72,22 +71,8 @@ public class RedisSpider {
             } catch (NullPointerException e) {
                 System.out.println("该页面没有解析到相关东西！跳过");
             }
-            return page;
         }
 
-        /**
-         * 新url种子进行额外的处理！（先进行了默认提供的正则处理！之后才进行这步。建议功能：在这里进行优先级的调整！）
-         * <p>
-         * redis实现了优先级的。这里我们不做展示。优先级的用法请到示范：PriorityQueueScheduler.java 中查看。
-         * redis的默认优先级是5.并且只有三个优先级，高于5的，低于5的，等于5的。
-         * @param page
-         * @return 自己
-         */
-        @Override
-        public Page processNewUrlSeeds(Page page) {
-            return page;
-        }
     };
-
 
 }

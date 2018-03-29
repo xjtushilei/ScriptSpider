@@ -18,7 +18,7 @@ public class PriorityQueueScheduler implements Scheduler {
     public static final int defaultPriority = 5;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    private PriorityBlockingQueue<UrlSeed> priorityQueue = new PriorityBlockingQueue<UrlSeed>(defaultPriority, (o1, o2) -> -((o1.getPriority() < o2.getPriority()) ? -1 : ((o1.getPriority() == o2.getPriority()) ? 0 : 1)));
+    private PriorityBlockingQueue<UrlSeed> priorityQueue = new PriorityBlockingQueue<UrlSeed>(defaultPriority, (o1, o2) -> -(Long.compare(o1.getPriority(), o2.getPriority())));
     private Set<UrlSeed> urlSet = Collections.synchronizedSet(new HashSet<>());
 
     @Override
@@ -41,18 +41,4 @@ public class PriorityQueueScheduler implements Scheduler {
         return priorityQueue.poll();
     }
 
-    //优先级队列测试！
-    //    public static void main(String[] args){
-    //        PriorityBlockingQueue<UrlSeed> priorityQueue = new PriorityBlockingQueue<UrlSeed>(defaultPriority, (o1, o2) -> -((o1.getPriority() < o2.getPriority()) ? -1 : ((o1.getPriority() == o2.getPriority()) ? 0 : 1)));
-    //
-    //        priorityQueue.add(new UrlSeed(1,"1"));
-    //        priorityQueue.add(new UrlSeed(3,"3"));
-    //        priorityQueue.add(new UrlSeed(5,"5"));
-    //        priorityQueue.add(new UrlSeed(9,"9"));
-    //        priorityQueue.add(new UrlSeed(10,"10"));
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //        System.out.println(priorityQueue.poll().getUrl());
-    //
-    //    }
 }

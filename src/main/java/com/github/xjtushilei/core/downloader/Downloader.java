@@ -12,5 +12,5 @@ public interface Downloader {
     /**
      * @param urlSeed 下载url页面
      */
-    public Page download(UrlSeed urlSeed);
+    Page download(UrlSeed urlSeed);
 }

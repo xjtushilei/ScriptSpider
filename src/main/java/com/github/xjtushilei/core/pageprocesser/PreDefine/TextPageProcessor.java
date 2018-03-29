@@ -26,7 +26,7 @@ public class TextPageProcessor implements PageProcessor {
      * @param page
      * @return 自己
      */
-    public Page process(Page page) {
+    public void process(Page page) {
         Document doc = page.getDocument();
 
         String title = doc.title();
@@ -37,8 +37,6 @@ public class TextPageProcessor implements PageProcessor {
         items.put("url", page.getUrlSeed().getUrl());
 
         page.setItems(items);
-
-        return page;
     }
 
 
@@ -49,9 +47,7 @@ public class TextPageProcessor implements PageProcessor {
      * @param page
      * @return 自己
      */
-    public Page processNewUrlSeeds(Page page) {
+    public void processNewUrlSeeds(Page page) {
 
-
-        return page;
     }
 }
