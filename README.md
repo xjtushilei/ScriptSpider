@@ -29,6 +29,12 @@ ScriptSpider（以下简称SS），做一个好用的爬虫框架。
 - 故障重爬（断电，宕机后继续爬取）【待完成】
 - 未完待续
 
+# 使用情况
+
+近12个月maven中央仓库使用情况。
+
+![近12个月maven中央仓库使用情况](https://www.xjtushilei.com/images/github/ScriptSpider/1.png)
+
 # 安装
 
 ### 使用maven
