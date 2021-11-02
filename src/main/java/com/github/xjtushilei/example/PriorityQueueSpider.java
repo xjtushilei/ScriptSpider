@@ -23,7 +23,7 @@ public class PriorityQueueSpider {
                 .setSaver(mySaver)
                 .setProcessor(myPageProcessor)
                 .thread(10)
-                .addUrlSeed("http://news.xjtu.edu.cn/")
+                .addUrlSeed("http://news.xjtu.edu.cn/rcpy.htm")
                 .addRegexRule("+http://news.xjtu.edu.cn/.*") //限制爬取《交大新闻网》以外的其他站点的信息
                 .run();
     }
