@@ -23,7 +23,7 @@ public class PriorityQueueSpider {
                 .setSaver(mySaver)
                 .setProcessor(myPageProcessor)
                 .thread(10)
-                .addUrlSeed("http://news.xjtu.edu.cn/zsjy.htm")
+                .addUrlSeed("http://news.xjtu.edu.cn/")
                 .addRegexRule("+http://news.xjtu.edu.cn/.*") //限制爬取《交大新闻网》以外的其他站点的信息
                 .run();
     }
@@ -60,7 +60,7 @@ public class PriorityQueueSpider {
             Document htmldoc = page.getDocument();
             //select返回的是一个数组，所以需要first，相关语法请google“jsoup select语法”和“cssquery”
             try {
-                String title = htmldoc.select(".d_title").first().text();
+                String title = htmldoc.select(".ssd").first().text();
 
                 //用来存放爬取到的信息，供之后存储！map类型的即可，可以自定义各种嵌套！
                 Map<String, String> items = new HashMap<String, String>();
@@ -76,23 +76,23 @@ public class PriorityQueueSpider {
         /**
          * 这里进行了优先级的用法示范。
          *
-         * 比如，你想在“交大新闻网”尽快或者优先爬取“招生就业”类型的新闻。
-         * 然后我们发现，这一类新闻的url符合 “http://newsxq.xjtu.edu.cn/info/1006/.*”
+         * 比如，你想在“交大新闻网”尽快或者优先爬取“人才培养”类型的新闻。
+         * 然后我们发现，这一类新闻的url符合 “http://news.xjtu.edu.cn/info/1003/.*”
          *
          */
         @Override
         public void processNewUrlSeeds(Page page) {
 
-            //招生就业模块，符合 “http://newsxq.xjtu.edu.cn/info/1006/.*htm” 或者“http://news.xjtu.edu.cn/zsjy/.*htm”（翻页时候的url），进行设置高优先级设置
+            //人才培养模块，符合 “http://news.xjtu.edu.cn/info/1006/.*htm” 或者“http://news.xjtu.edu.cn/rcpy/.*htm”（翻页时候的url），进行设置高优先级设置
             page.getNewUrlSeed().forEach(urlSeed -> {
-                if (Pattern.matches("http://news.xjtu.edu.cn/zsjy.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1006/.*htm", urlSeed.getUrl())) {
+                if (Pattern.matches("http://news.xjtu.edu.cn/rcpy.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1003/.*htm", urlSeed.getUrl())) {
                     urlSeed.setPriority(8);
                 }
             });
 
-            //综合新闻 板块 ，符合“http://newsxq.xjtu.edu.cn/info/1002/.*htm” 或者"http://news.xjtu.edu.cn/zhxw.htm"(翻页时候的url），进行设置低优先级设置
+            //要闻聚焦 板块 ，符合“http://news.xjtu.edu.cn/info/1002/.*htm” 或者"http://news.xjtu.edu.cn/ywjj.htm"(翻页时候的url），进行设置低优先级设置
             page.getNewUrlSeed().forEach(urlSeed -> {
-                if (Pattern.matches("http://news.xjtu.edu.cn/zhxw.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1002/.*htm", urlSeed.getUrl())) {
+                if (Pattern.matches("http://news.xjtu.edu.cn/ywjj.*htm", urlSeed.getUrl()) || Pattern.matches("http://news.xjtu.edu.cn/info/1002/.*htm", urlSeed.getUrl())) {
                     urlSeed.setPriority(2);
                 }
             });
