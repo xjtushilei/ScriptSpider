@@ -60,7 +60,7 @@ public class RedisSpider {
             Document htmldoc = page.getDocument();
             //select返回的是一个数组，所以需要first，相关语法请google“jsoup select语法”和“cssquery”
             try {
-                String title = htmldoc.select(".d_title").first().text();
+                String title = htmldoc.select(".ssd").first().text();
 
                 //用来存放爬取到的信息，供之后存储！map类型的即可，可以自定义各种嵌套！
                 Map<String, String> items = new HashMap<String, String>();
